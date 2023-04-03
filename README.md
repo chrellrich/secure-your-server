@@ -13,7 +13,7 @@ Steps to secure an Ubuntu 22.04 LTS server
 
 Create a new user, so you don't use root to log in.
 
-```sh
+```shell
 adduser <user>
 usermod -aG sudo
 ```
@@ -27,7 +27,7 @@ By requiring two factors, 2FA adds a layer of security beyond just a password, m
 
 ### Install the Google Authenticator PAM Module
 
-```sh
+```shell
 sudo apt install libpam-google-authenticator
 ```
 
@@ -73,14 +73,14 @@ PermitRootLogin no
 AllowUsers <user>
 ```
 
-Allow authentication via pubickey or password and 2fa code with pam (needs to be added at the bottom)
+Allow authentication via publickey or password and 2fa code with pam (needs to be added at the bottom)
 ```
 AuthenticationMethods publickey keyboard-interactive
 ```
 
 ### Restart SSH
 
-```sh
+```shell
 sudo systemctl restart sshd
 ```
 
@@ -93,7 +93,7 @@ such as multiple failed login attempts, and automatically blocks access from the
 
 ### Installation
 
-```sh
+```shell
 sudo apt install fail2ban
 ```
 
@@ -101,7 +101,7 @@ sudo apt install fail2ban
 
 Copy the config file
 
-```sh
+```shell
 sudo cp /etc/fail2ban/jail.{conf,local}
 ```
 
@@ -113,7 +113,7 @@ bantime  = 1d
 
 ### Start the Service.
 
-```sh
+```shell
 sudo systemctl enable fail2ban
 sudo systemctl start fail2ban
 ```
@@ -123,13 +123,13 @@ sudo systemctl start fail2ban
 
 #### Status of sshd Jail
 
-```sh
+```shell
 sudo fail2ban-client status sshd
 ```
 
 #### Unban an IP
 
-```sh
+```shell
 sudo fail2ban-client set sshd unbanip 23.34.45.56
 ```
 
@@ -138,46 +138,45 @@ sudo fail2ban-client set sshd unbanip 23.34.45.56
 ## Firewall
 
 Here's how you can secure your server with `ufw`.
-Keep in mind that these are basic rules and you may need to adjust them based on your specific needs.
+Keep in mind that these are basic rules, and you may need to adjust them based on your specific needs.
 
 1. Check the current status of ufw by typing the following command:
-   ```sh
+   ```shell
    sudo ufw status
    ```
 
 1. By default, ufw should be inactive. If it's not, you can disable it using the following command:
-   ```sh
+   ```shell
    sudo ufw disable
    ```
 
-1. Set the default policy for incoming and outgoing traffic to deny all connections:
-   ```sh
+1. Set the default policy for incoming traffic to deny all connections:
+   ```shell
    sudo ufw default deny incoming
-   sudo ufw default deny outgoing
    ```
 
-1. Allow SSH connections so you can still access your server remotely. Use the following command to enable SSH:
-   ```sh
+1. Allow SSH connections, so you can still access your server remotely. Use the following command to enable SSH:
+   ```shell
    sudo ufw allow ssh
    ```
 
 1. If you're running a web server, allow HTTP and HTTPS traffic by using the following commands:
-   ```sh
+   ```shell
    sudo ufw allow http
    sudo ufw allow https
    ```
 
 1. If you're running other services, such as FTP or SMTP, you'll need to allow those ports as well. For example, to allow FTP traffic:
-   ```sh
+   ```shell
    sudo ufw allow ftp
    ```
 
 1. After allowing the necessary traffic, enable ufw:
-   ```sh
+   ```shell
    sudo ufw enable
    ```
 
 1. Check the status again to make sure ufw is running:
-   ```sh
+   ```shell
    sudo ufw status
    ```
