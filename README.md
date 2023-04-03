@@ -2,6 +2,13 @@
 
 Steps to secure an Ubuntu 22.04 LTS server
 
+- [Creating a new User](#creating-a-new-user)
+- [Installing 2FA](#installing-2fa)
+- [fail2ban](#fail2ban)
+
+
+
+
 ## Creating a new User
 
 Create a new user, so you don't use root to log in.
