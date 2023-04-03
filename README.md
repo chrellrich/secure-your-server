@@ -5,9 +5,9 @@ Steps to secure an Ubuntu 22.04 LTS server
 - [Creating a new User](#creating-a-new-user)
 - [Installing 2FA](#installing-2fa)
 - [fail2ban](#fail2ban)
+- [Firewall](#firewall)
 
-
-
+***
 
 ## Creating a new User
 
@@ -132,3 +132,52 @@ sudo fail2ban-client status sshd
 ```sh
 sudo fail2ban-client set sshd unbanip 23.34.45.56
 ```
+
+***
+
+## Firewall
+
+Here's how you can secure your server with `ufw`.
+Keep in mind that these are basic rules and you may need to adjust them based on your specific needs.
+
+1. Check the current status of ufw by typing the following command:
+   ```sh
+   sudo ufw status
+   ```
+
+1. By default, ufw should be inactive. If it's not, you can disable it using the following command:
+   ```sh
+   sudo ufw disable
+   ```
+
+1. Set the default policy for incoming and outgoing traffic to deny all connections:
+   ```sh
+   sudo ufw default deny incoming
+   sudo ufw default deny outgoing
+   ```
+
+1. Allow SSH connections so you can still access your server remotely. Use the following command to enable SSH:
+   ```sh
+   sudo ufw allow ssh
+   ```
+
+1. If you're running a web server, allow HTTP and HTTPS traffic by using the following commands:
+   ```sh
+   sudo ufw allow http
+   sudo ufw allow https
+   ```
+
+1. If you're running other services, such as FTP or SMTP, you'll need to allow those ports as well. For example, to allow FTP traffic:
+   ```sh
+   sudo ufw allow ftp
+   ```
+
+1. After allowing the necessary traffic, enable ufw:
+   ```sh
+   sudo ufw enable
+   ```
+
+1. Check the status again to make sure ufw is running:
+   ```sh
+   sudo ufw status
+   ```
